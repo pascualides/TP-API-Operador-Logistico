@@ -47,19 +47,97 @@
               "$ref": "#/definitions/Envio"
             }
           }
-        ]
-      },
-      "put": {
+        ],
+        "responses": {
+          "404": {
+            "description": "Pet not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        }
+      }
+    },
+    "/ordenes_envio/{ordenID}": {
+      "get": {
         "tags": [
-          "pet"
+          "ordenes_envio"
         ],
-        "summary": "Update an existing pet",
+        "summary": "Obtener una orden de envio segun su id",
+        "operationId": "getOrdenEnvioById",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ordenID",
+            "in": "path",
+            "description": "ID de la orden de envio a obtener",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Envio"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Envio not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/repartidores/{repartidorID}": {
+      "delete": {
+        "tags": [
+          "repartidores"
+        ],
+        "summary": "Eliminar un repartidor",
         "description": "",
-        "operationId": "updatePet",
-        "consumes": [
-          "application/json",
-          "application/xml"
+        "operationId": "deletePet",
+        "produces": [
+          "application/xml",
+          "application/json"
         ],
+        "parameters": [
+          {
+            "name": "repartidorID",
+            "in": "path",
+            "description": "id del repartidor a eliminar",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Repartidor not found"
+          }
+        }
+      }
+    },
+    "/repartidores": {
+      "post": {
+        "tags": [
+          "repartidores"
+        ],
+        "summary": "Crear un repartidor",
+        "operationId": "crearRepartidor",
         "produces": [
           "application/xml",
           "application/json"
@@ -68,32 +146,43 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Pet object that needs to be added to the store",
+            "description": "Created repartidor object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Pet"
+              "$ref": "#/definitions/Persona"
             }
           }
         ],
         "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "repartidores"
+        ],
+        "summary": "Obtener todos los repartidores",
+        "operationId": "getRepartidores",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Persona"
+              }
+            }
+          },
           "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Pet not found"
-          },
-          "405": {
-            "description": "Validation exception"
+            "description": "Invalid tag value"
           }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
+        }
       }
     },
     "/pet/findByStatus": {
