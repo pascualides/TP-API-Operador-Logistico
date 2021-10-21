@@ -6,7 +6,7 @@
     "title": "Api Operador Logistico",
     "termsOfService": "http://swagger.io/terms/"
   },
-  "host": "petstore.swagger.io",
+  "host": "apiOperador.swagger.io",
   "basePath": "/v2",
   "tags": [
     {
@@ -49,8 +49,11 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Succes"
+          },
           "404": {
-            "description": "Pet not found"
+            "description": "Resource not found"
           },
           "405": {
             "description": "Validation exception"
@@ -91,12 +94,7 @@
           "404": {
             "description": "Envio not found"
           }
-        },
-        "security": [
-          {
-            "api_key": []
-          }
-        ]
+        }
       }
     },
     "/ordenes_envio/{ordenID}/repartidor": {
@@ -182,6 +180,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Succes"
+          },
           "400": {
             "description": "Invalid ID supplied"
           },
@@ -214,8 +215,14 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "successful operation"
+          "200": {
+            "description": "Succes"
+          },
+          "400": {
+            "description": "Error, Invalid data"
+          },
+          "404": {
+            "description": "Not found"
           }
         }
       },
@@ -244,22 +251,6 @@
           }
         }
       }
-    }
-  },
-  "securityDefinitions": {
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
-      }
-    },
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
     }
   },
   "definitions": {
