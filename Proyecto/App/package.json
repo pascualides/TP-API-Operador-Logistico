@@ -1,0 +1,16 @@
+{
+  "name": "app-operador-logistico",
+  "version": "0.0.1",
+  "description": "Desarrollo de una API para el funcionamiento de un operador logistico",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "grupo2",
+  "license": "ISC"
+}
