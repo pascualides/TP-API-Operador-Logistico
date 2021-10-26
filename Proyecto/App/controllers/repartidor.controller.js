@@ -3,6 +3,8 @@ const Repartidor = require('../models/repartidor');
 const repartidor_ctrl = {};
 
 repartidor_ctrl.getRepartidores = async(req, res) => {
+   
+    res.status(404).json([{nombre:"Nombre", apellido:"apellido"}, {nombre:"otro nombre", apellido:"otro apellido"}]);
 };
 
 repartidor_ctrl.getRepartidor = async(req, res) => {

@@ -1,6 +1,30 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const sql = require('mssql');
+
+var config = {
+    user: 'admin',
+    password: 'tp-iaew-2021',
+    server: '',
+    database:'operador'
+};
+
+sql.connect(config, (err) => {
+    if (err) {
+        console.log(err);
+    }
+
+    var request = new sql.Request();
+
+    request.query('select* from empleados', (err, recordset) => {
+        if (err) {
+            
+        }
+        //res.send(recordset)
+    });
+});
+
 const app = express();
 
 //Para entender JSON

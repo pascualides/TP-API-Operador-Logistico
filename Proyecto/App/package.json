@@ -4,7 +4,8 @@
   "description": "Desarrollo de una API para el funcionamiento de un operador logistico",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mssql": "^7.2.1"
   },
   "devDependencies": {},
   "scripts": {
