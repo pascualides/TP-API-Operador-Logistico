@@ -10,6 +10,7 @@ const app = express();
 app.use(express.json())
 
 app.use('/repartidores', require('./routes/repartidor.routes'));
+app.use('/ordenes_envio', require('./routes/envio.routes'));
 
 //Esperar las peticiones en el puerto 3000
 app.listen(3000, () => {
