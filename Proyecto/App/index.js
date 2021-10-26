@@ -3,35 +3,10 @@ const bodyParser = require('body-parser');
 
 const sql = require('mssql');
 
-var config = {
-    user: 'admin',
-    password: 'tp-iaew-2021',
-    server: 'operador-logistico-db.c8f01er7irve.us-east-1.rds.amazonaws.com',
-    database:'operador',
-    options: {
-        encrypt: true,
-        trustServerCertificate: true,
-    }
-};
 
-sql.connect(config, (err) => {
-    if (err) {
-        console.log(err);
-    }
-    else{
-        console.log("Se conecto");
-    }
-    
 
-    var request = new sql.Request();
 
-    request.query('select * from envio', (err, recordset) => {
-        if (err) {
-            
-        }
-        console.log(recordset);
-    });
-});
+
 
 const app = express();
 

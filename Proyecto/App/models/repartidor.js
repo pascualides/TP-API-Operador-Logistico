@@ -1,7 +1,8 @@
 const Repartidor = {
-    DNI:"",
+    documento:"",
     nombre:"",
-    apellido:""
+    apellido:"",
+    email:"",
 }
 
 module.exports = Repartidor;
