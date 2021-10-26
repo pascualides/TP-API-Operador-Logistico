@@ -4,10 +4,6 @@ const bodyParser = require('body-parser');
 const sql = require('mssql');
 
 
-
-
-
-
 const app = express();
 
 //Para entender JSON
