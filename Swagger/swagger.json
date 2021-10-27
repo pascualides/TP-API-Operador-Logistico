@@ -260,7 +260,7 @@
         "calle": {
           "type": "string"
         },
-        "barrio": {
+        "localidad": {
           "type": "string"
         },
         "provincia": {

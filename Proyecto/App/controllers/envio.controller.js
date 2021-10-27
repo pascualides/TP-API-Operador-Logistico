@@ -4,6 +4,7 @@ const sql = require('mssql');
 
 const envio_ctrl = {};
 
+
 envio_ctrl.crearEnvio = async(req, res) => {
 
     let nroProducto = 0;
@@ -47,6 +48,8 @@ envio_ctrl.crearEnvio = async(req, res) => {
         if (err) {
             console.log(err);
         }
+
+        //Insertat producto
         var request = new sql.Request();
     
         request.query("insert into producto(peso, tamaño, delicado) values ("+envio.producto.peso+", '"+envio.producto.tamaño+"', '"+envio.producto.delicado+"') SELECT SCOPE_IDENTITY() as id", (err, recordset) => {
@@ -55,6 +58,34 @@ envio_ctrl.crearEnvio = async(req, res) => {
             }
             if(recordset.rowsAffected[0]){
                 nroProducto = recordset.recordset[0].id;
+
+
+
+            //INSERTAR ENVIO
+
+            // insert into envio (provinciaDestino, codPostalDestino, calleDestino, nroDestino, provinciaOrigen, codPostalOrigen, calleOrigen, nroOrigen, dniContacto, nroProducto, estado, fechaRecepcion)
+            // values ('cordoba', 5000, 'sarmiento', 321, 'Salta', 3000, 'san martin', 546, 23, 3, 'creado', getdate()) 
+
+                let request2 = new sql.Request();
+
+                let queryEnvio = " insert into envio (provinciaDestino, codPostalDestino, localidadDestino, calleDestino, nroDestino, provinciaOrigen, codPostalOrigen, localidadOrigen, calleOrigen, nroOrigen, dniContacto, nroProducto, estado, fechaRecepcion) "
+
+                queryEnvio += "values ('"+envio.destino.provincia+"', "+envio.destino.codPostal+", '"+envio.destino.localidad+"', '"+envio.destino.calle+"', "+envio.destino.nro+", "
+        
+                queryEnvio += "'"+envio.origen.provincia+"', "+envio.origen.codPostal+", '"+envio.origen.localidad+"', '"+envio.origen.calle+"', "+envio.origen.nro
+        
+                queryEnvio += ", "+envio.contacto.documento+", "+nroProducto+", 'creado', getdate())"
+           
+                request2.query(queryEnvio, (err, recordset) => {
+                    if (err) {
+                        
+                    }
+                        res.status(200).json({status: "Envio creado con exito"})
+                    
+                });
+
+
+
             }
         });
 
@@ -74,17 +105,15 @@ envio_ctrl.crearEnvio = async(req, res) => {
 
         request.query(query, (err, recordset) => {
             if (err) {
-                
-            }
-            if(recordset.rowsAffected[0]){
-                nroProducto = recordset.recordset[0].id;
             }
         });
 
-        //FALTA INSERTAR ENVIO
-
     });
 };
+
+
+
+
 
 
 module.exports = envio_ctrl;

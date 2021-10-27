@@ -177,7 +177,7 @@ definitions:
     properties:
       calle:
         type: "string"
-      barrio:
+      localidad:
         type: "string"
       provincia:
         type: "string"
