@@ -5,9 +5,9 @@ const router = express.Router();
 
 const envio_ctrl = require('../controllers/envio.controller')
 
-// router.get('/', repartidor_ctrl.getRepartidores);
+router.get('/', envio_ctrl.getEnvios);
 
-// router.get('/:id', repartidor_ctrl.getRepartidor);
+router.get('/:id', envio_ctrl.getEnvio);
 
 // router.delete('/:id', repartidor_ctrl.deleteRepartidor);
 

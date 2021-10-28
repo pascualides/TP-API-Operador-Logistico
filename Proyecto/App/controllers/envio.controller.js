@@ -4,6 +4,41 @@ const sql = require('mssql');
 
 const envio_ctrl = {};
 
+envio_ctrl.getEnvios = async(req, res) => {
+    sql.connect(configdb, (err) => {
+        if (err) {
+            console.log(err);
+        }
+        var request = new sql.Request();
+    
+        request.query("select * from envio e join contacto c on e.dniContacto = c.documento join producto p on e.nroProducto = p.id", (err, recordset) => {
+            if (err) {
+                
+            }
+            res.status(200).json(recordset.recordset);               
+        });
+
+    });
+};
+
+
+envio_ctrl.getEnvio = async(req, res) => {
+    let id = req.params.id
+    sql.connect(configdb, (err) => {
+        if (err) {
+            console.log(err);
+        }
+        var request = new sql.Request();
+    
+        request.query("select * from envio e join contacto c on e.dniContacto = c.documento join producto p on e.nroProducto = p.id where e.id ="+id, (err, recordset) => {
+            if (err) {
+                
+            }
+            res.status(200).json(recordset.recordset);               
+        });
+
+    });
+};
 
 envio_ctrl.crearEnvio = async(req, res) => {
 
