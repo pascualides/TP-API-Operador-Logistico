@@ -40,6 +40,16 @@ envio_ctrl.getEnvio = async(req, res) => {
     });
 };
 
+
+envio_ctrl.asignarRepartidor = async(req, res) => {
+    // select documento from repartidor where documento not inselect repartidor from envio 
+    // poner el estado en transito a envio
+};
+
+envio_ctrl.setEntrega = async(req, res) => {
+    //Cambiar estado envio a entregado y setear fecha de entrega
+};
+
 envio_ctrl.crearEnvio = async(req, res) => {
 
     let nroProducto = 0;

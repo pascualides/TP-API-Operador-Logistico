@@ -9,11 +9,9 @@ router.get('/', envio_ctrl.getEnvios);
 
 router.get('/:id', envio_ctrl.getEnvio);
 
-// router.delete('/:id', repartidor_ctrl.deleteRepartidor);
+router.post('/:id/repartidor', repartidor_ctrl.asignarRepartidor);
 
-// router.post('/', repartidor_ctrl.createRepartidor);
-
-// router.post('/:id', repartidor_ctrl.updateRepartidor);
+router.post('/:id/entrega', repartidor_ctrl.setEntrega);
 
 router.post('/', envio_ctrl.crearEnvio)
 
