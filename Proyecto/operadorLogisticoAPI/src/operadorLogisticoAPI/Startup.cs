@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +28,17 @@ namespace operadorLogisticoAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+             // 1. Add Authentication Services
+            services.AddAuthentication(options =>
+            {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+            options.Authority = "https://dev-282k6-68.us.auth0.com/";
+            options.Audience = "https://www.example.com/api-logistic-operator-norte";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -42,6 +54,13 @@ namespace operadorLogisticoAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+
+            app.Use((context, next) =>
+            {
+                context.Request.EnableBuffering();
+                return next();
+            });
 
             app.UseEndpoints(endpoints =>
             {
