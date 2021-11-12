@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 using System.Net;
 using Newtonsoft.Json.Linq;
-
+using System.Net.Http;
 
 namespace operadorLogisticoAPI.Controllers
 {
@@ -20,29 +20,10 @@ namespace operadorLogisticoAPI.Controllers
     {
 
         public string getConnectionString() {
-            return "Data Source=" + "operador-logistico-db.c8f01er7irve.us-east-1.rds.amazonaws.com,1433" +";database = operador"+ ";User ID=" + "admin" + ";Password=" + "tp-iaew-2021;" + "TrustServerCertificate=true;";
+            return "Data Source=" + "operador-logistico-db.c8f01er7irve.us-east-1.rds.amazonaws.com,1433" +";database = operador"+ ";User ID=" + "admin" + ";Password=" + "tp-iaew-2021;" + "TrustServerCertificate=true; MultipleActiveResultSets=true;";
         }
 
-        
-
-        // GET api/values
-        // [HttpGet]
-        // public IEnumerable<string> Get()
-        // {
-        //     using (SqlConnection connection = new SqlConnection(
-        //        getConnectionString()))
-        //     {
-        //         SqlCommand command = new SqlCommand("select * from envios", connection);
-        //         command.Connection.Open();
-        //         //command.ExecuteNonQuery();
-        //         command.BeginExecuteReader();
-        //     }
-        //     return new string[] { "value1", "value2" };
-
-            
-        // }
-
-        
+       
         // GET /Envios
         [HttpGet]
         public async Task<string> Get()
@@ -158,23 +139,67 @@ namespace operadorLogisticoAPI.Controllers
         }
 
         // POST Envios/5/entrega
-         [Route("{envioId}/entrega")]
+        [Route("{envioId}/entrega")]
         [HttpPost]
-        public async Task<string> Post()
+        public async Task<string> Post(int envioId)
         {
-            return "ENTRA ACA";
+
+            SqlConnection connection = new SqlConnection(getConnectionString());
+
+            var querySetFecha = "UPDATE envio SET fechaEntrega = getDate(), estado = 'entregado' WHERE id = "+ envioId;
+
+            SqlCommand command = new SqlCommand(querySetFecha, connection);
+
+            command.Connection.Open();
+
+            command.ExecuteNonQuery();
+
+            if (connection.State == System.Data.ConnectionState.Open) 
+            connection.Close();
+
+
+            return querySetFecha;
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        // Put Envios/5/repartidor
+        [Route("{Id}/repartidor")]
+        [HttpPut]
+        public HttpResponseMessage Put(int Id)
         {
+            SqlConnection connection = new SqlConnection(getConnectionString());
+
+            var queryRepartidores = "select documento from repartidores";
+
+            SqlCommand command = new SqlCommand(queryRepartidores, connection);
+            
+            command.Connection.Open();
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            List<int> resultado = new List<int>();
+
+            while(reader.Read())
+            {
+	            resultado.Add(Convert.ToInt32(reader["documento"]));
+            }
+            
+            var rnd = new Random();
+
+            int nroRandom = rnd.Next(resultado.Count);
+            
+
+            var querySetRepartidor = "UPDATE envio SET estado = 'En transito', dniRepartidor = "+resultado[nroRandom]+" WHERE id = "+ Id;
+
+            SqlCommand command2 = new SqlCommand(querySetRepartidor, connection);  
+
+            command2.ExecuteNonQuery();
+
+
+            if (connection.State == System.Data.ConnectionState.Open) 
+            connection.Close();
+
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
