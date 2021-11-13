@@ -8,10 +8,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NSwag.AspNetCore;
+using operadorLogisticoAPI.Repositories.Contexts;
 
 namespace operadorLogisticoAPI
 {
@@ -27,9 +30,13 @@ namespace operadorLogisticoAPI
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<OperadorContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));
+
             services.AddControllers();
 
-             // 1. Add Authentication Services
+            services.AddSwaggerDocument();
+
+            // 1. Add Authentication Services
             services.AddAuthentication(options =>
             {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -54,6 +61,13 @@ namespace operadorLogisticoAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+            //c =>
+            //{
+            //    c.SwaggerRoutes.Add(new SwaggerUi3Route("OperadorLogistico", "/swagger/v1/swagger.json"));
+            //});
 
 
             app.Use((context, next) =>

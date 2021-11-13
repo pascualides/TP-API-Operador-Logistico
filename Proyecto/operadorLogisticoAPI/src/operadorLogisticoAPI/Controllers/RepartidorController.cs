@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Text;
+using operadorLogisticoAPI.Repositories.Contexts;
+using operadorLogisticoAPI.Repositories.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace operadorLogisticoAPI.Controllers
 {
@@ -12,79 +15,81 @@ namespace operadorLogisticoAPI.Controllers
     [Route("[controller]")]
     public class RepartidorController : ControllerBase
     {
+        private readonly OperadorContext _context;
 
-        public string getConnectionString() {
-            return "Data Source=" + "operador-logistico-db.c8f01er7irve.us-east-1.rds.amazonaws.com,1433" +";database = operador"+ ";User ID=" + "admin" + ";Password=" + "tp-iaew-2021;" + "TrustServerCertificate=true;";
-        }
-        
-        // GET repartidores
-        [HttpGet]
-        public async Task<string> Get()
+        public RepartidorController(OperadorContext context)
         {
-            SqlConnection connection = new SqlConnection(getConnectionString());
-            
-            SqlCommand command = new SqlCommand("select * from repartidores FOR JSON PATH", connection);
-            command.Connection.Open();
-
-            var result = await command.ExecuteReaderAsync();
-            var jsonResult = new StringBuilder();
-
-            if (!result.HasRows)
-            {
-            }
-            else
-            {
-                while (result.Read())
-                {
-                    jsonResult.Append(result[0].ToString());            
-                }
-            }
-
-            return jsonResult.ToString();
+            _context = context;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<string> Get(int id)
+        public async Task<ActionResult<Repartidores>> Get(int id)
         {
-            SqlConnection connection = new SqlConnection(getConnectionString());
-            
-            SqlCommand command = new SqlCommand("select * from repartidores where documento = "+id+" FOR JSON PATH", connection);
-            command.Connection.Open();
+            var result = await _context.Repartidores.FindAsync(id);
 
-            var result = await command.ExecuteReaderAsync();
-            var jsonResult = new StringBuilder();
-
-            if (!result.HasRows)
+            if (result is null)
             {
-            }
-            else
-            {
-                while (result.Read())
-                {
-                    jsonResult.Append(result[0].ToString());            
-                }
+                return NotFound($"Repartidor no encontrado para el id: {id}");
             }
 
-            return jsonResult.ToString();
+            return Ok(result);
         }
 
         // POST Repartidor
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> CreateAsync([FromBody]Repartidores repartidor)
         {
+            await _context.Repartidores.AddAsync(repartidor);
+            await _context.SaveChangesAsync();
+
+            return Ok(repartidor);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody]Repartidores repartidor)
         {
+            // Check that the record exists.
+            var entity = await _context.Envio.FindAsync(id);
+
+            if (entity == null)
+            {
+                throw new Exception($"Repartidor no encontrado para el id: {id}");
+            }
+
+            // Update changes if any of the properties have been modified.
+            _context.Entry(entity).CurrentValues.SetValues(repartidor);
+            _context.Entry(entity).State = EntityState.Modified;
+
+            if (_context.Entry(entity).Properties.Any(property => property.IsModified))
+            {
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok(entity);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
+            // Check that the record exists.
+            var entity = await _context.Repartidores.FindAsync(id);
+
+            if (entity is null)
+            {
+                return NotFound($"Repartidor no encontrado para el id: {id}");
+            }
+
+            // Set the deleted flag.
+            //entity.IsDeleted = true;
+            _context.Entry(entity).State = EntityState.Modified;
+
+            // Save changes to the Db Context.
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }
