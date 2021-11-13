@@ -193,6 +193,9 @@ namespace operadorLogisticoAPI.Repositories.Contexts
                     .HasColumnName("nombre")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.IsDeleted)
+                    .HasColumnName("isDeleted");
             });
 
             OnModelCreatingPartial(modelBuilder);

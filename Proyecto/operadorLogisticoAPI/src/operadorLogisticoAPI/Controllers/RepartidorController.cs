@@ -51,7 +51,7 @@ namespace operadorLogisticoAPI.Controllers
         public async Task<IActionResult> UpdateAsync(int id, [FromBody]Repartidores repartidor)
         {
             // Check that the record exists.
-            var entity = await _context.Envio.FindAsync(id);
+            var entity = await _context.Repartidores.FindAsync(id);
 
             if (entity == null)
             {
