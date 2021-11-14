@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace operadorLogisticoAPI.Repositories.Entities
 {
@@ -26,7 +27,11 @@ namespace operadorLogisticoAPI.Repositories.Entities
         public string TamañoProd { get; set; }
         public string Delicado { get; set; }
 
-        public virtual Contacto DniContactoNavigation { get; set; }
+        //prueba
+        [NotMapped]
+        public Contacto contacto { get; set; }
+
+        // public virtual Contacto DniContactoNavigation { get; set; }
         public virtual Repartidores DniRepartidorNavigation { get; set; }
         public virtual Producto NroProductoNavigation { get; set; }
     }

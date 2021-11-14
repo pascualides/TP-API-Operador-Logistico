@@ -39,6 +39,19 @@ namespace operadorLogisticoAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody]Envio envio)
         {
+
+            var result = await _context.Repartidores.FindAsync(envio.contacto.Documento);
+
+            if (result is null)
+            {
+                await _context.Contacto.AddAsync(envio.contacto);
+            }
+            
+
+            envio.FechaRecepcion = DateTime.Now;
+            envio.Estado = "Creado";
+            envio.DniContacto = envio.contacto.Documento;
+            
             await _context.Envio.AddAsync(envio);
             await _context.SaveChangesAsync();
 

@@ -133,10 +133,10 @@ namespace operadorLogisticoAPI.Repositories.Contexts
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.DniContactoNavigation)
-                    .WithMany(p => p.Envio)
-                    .HasForeignKey(d => d.DniContacto)
-                    .HasConstraintName("FK__envio__dniContac__5CD6CB2B");
+                // entity.HasOne(d => d.DniContactoNavigation)
+                //     .WithMany(p => p.Envio)
+                //     .HasForeignKey(d => d.DniContacto)
+                //     .HasConstraintName("FK__envio__dniContac__5CD6CB2B");
 
                 entity.HasOne(d => d.DniRepartidorNavigation)
                     .WithMany(p => p.Envio)
