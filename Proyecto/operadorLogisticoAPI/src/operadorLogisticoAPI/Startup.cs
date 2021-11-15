@@ -14,9 +14,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NSwag.AspNetCore;
+//using NSwag.AspNetCore;
 using operadorLogisticoAPI.API;
 using operadorLogisticoAPI.Repositories.Contexts;
+using Microsoft.OpenApi.Models;
+
 
 namespace operadorLogisticoAPI
 {
@@ -47,9 +49,9 @@ namespace operadorLogisticoAPI
             ///Config Autorizacion
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("write:envios", policy => policy.Requirements.Add(new HasScopeRequirement("write:reservas", "https://dev-282k6-68.us.auth0.com/")));
-                options.AddPolicy("write:estados_envios", policy => policy.Requirements.Add(new HasScopeRequirement("write:reservas", "https://dev-282k6-68.us.auth0.com/")));
-                options.AddPolicy("write:repartidores", policy => policy.Requirements.Add(new HasScopeRequirement("write:reservas", "https://dev-282k6-68.us.auth0.com/")));
+                options.AddPolicy("write:envios", policy => policy.Requirements.Add(new HasScopeRequirement("write:envios", "https://dev-282k6-68.us.auth0.com/")));
+                options.AddPolicy("write:estados_envios", policy => policy.Requirements.Add(new HasScopeRequirement("write:estados_envios", "https://dev-282k6-68.us.auth0.com/")));
+                options.AddPolicy("write:repartidores", policy => policy.Requirements.Add(new HasScopeRequirement("write:repartidores", "https://dev-282k6-68.us.auth0.com/")));
 
             });
 
@@ -58,7 +60,12 @@ namespace operadorLogisticoAPI
             // register the scope authorization handler
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
-            services.AddSwaggerDocument();
+            services.AddSwaggerGen(c =>{
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AWS Serverless Asp.Net Core Web API", Version = "v1" });
+            });
+
+
+            //services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -78,12 +85,21 @@ namespace operadorLogisticoAPI
 
             app.UseAuthorization();
 
-            app.UseOpenApi();
-            app.UseSwaggerUi3();
+            //app.UseOpenApi();
+            //app.UseSwaggerUi3();
+
             //c =>
             //{
             //    c.SwaggerRoutes.Add(new SwaggerUi3Route("OperadorLogistico", "/swagger/v1/swagger.json"));
             //});
+
+            app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/Prod/swagger/v1/swagger.json","AWS Serverless Asp.Net Core Web API");
+                    c.RoutePrefix = "swagger";
+                });
+
 
 
             app.Use((context, next) =>
