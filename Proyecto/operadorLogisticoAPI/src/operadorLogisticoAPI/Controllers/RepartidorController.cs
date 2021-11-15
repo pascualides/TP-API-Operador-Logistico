@@ -8,6 +8,7 @@ using System.Text;
 using operadorLogisticoAPI.Repositories.Contexts;
 using operadorLogisticoAPI.Repositories.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace operadorLogisticoAPI.Controllers
 {
@@ -38,6 +39,7 @@ namespace operadorLogisticoAPI.Controllers
 
         // POST Repartidor
         [HttpPost]
+        [Authorize(Policy = "write:repartidores")]
         public async Task<IActionResult> CreateAsync([FromBody]Repartidores repartidor)
         {
             await _context.Repartidores.AddAsync(repartidor);
@@ -48,6 +50,7 @@ namespace operadorLogisticoAPI.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
+        [Authorize(Policy = "write:repartidores")]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody]Repartidores repartidor)
         {
             // Check that the record exists.
@@ -72,6 +75,7 @@ namespace operadorLogisticoAPI.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "write:repartidores")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             // Check that the record exists.
@@ -83,7 +87,7 @@ namespace operadorLogisticoAPI.Controllers
             }
 
             // Set the deleted flag.
-            //entity.IsDeleted = true;
+            entity.IsDeleted = true;
             _context.Entry(entity).State = EntityState.Modified;
 
             // Save changes to the Db Context.

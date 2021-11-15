@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using operadorLogisticoAPI.Repositories.Entities;
 using operadorLogisticoAPI.Repositories.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace operadorLogisticoAPI.Controllers
 {
@@ -37,6 +38,7 @@ namespace operadorLogisticoAPI.Controllers
 
         // POST Envios/
         [HttpPost]
+        [Authorize(Policy = "write:envios")]
         public async Task<IActionResult> CreateAsync([FromBody]Envio envio)
         {
 
@@ -61,7 +63,8 @@ namespace operadorLogisticoAPI.Controllers
         // POST Envios/5/entrega
         [Route("{envioId}/entrega")]
         [HttpPost]
-        public async Task<IActionResult> UpdateToEntregadoStatus([FromQuery] int envioId)
+        [Authorize(Policy = "write:estados_envios")]
+        public async Task<IActionResult> UpdateToEntregadoStatus(int envioId)
         {
             // Check that the record exists.
             var entity = await _context.Envio.FindAsync(envioId);
@@ -77,13 +80,14 @@ namespace operadorLogisticoAPI.Controllers
         // Put Envios/5/repartidor
         [Route("{envioId}/repartidor")]
         [HttpPost]
-        public async Task<IActionResult> UpdateToEnTransito([FromQuery] int envioId, int documentoRepartidor)
+        [Authorize(Policy = "write:estados_envios")]
+        public async Task<IActionResult> UpdateToEnTransito(int envioId, [FromBody] Repartidores repartidor)
         {
             // Check that the record exists.
             var entity = await _context.Envio.FindAsync(envioId);
 
             entity.Estado = "En Transito";
-            entity.DniRepartidor = documentoRepartidor;
+            entity.DniRepartidor = repartidor.Documento;
 
             var updatedEnvio = await this.Update(envioId, entity);
 
