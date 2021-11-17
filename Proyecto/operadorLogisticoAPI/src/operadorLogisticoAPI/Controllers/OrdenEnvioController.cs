@@ -7,6 +7,11 @@ using operadorLogisticoAPI.Repositories.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 
+using RestSharp;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+
 namespace operadorLogisticoAPI.Controllers
 {
     
@@ -20,7 +25,6 @@ namespace operadorLogisticoAPI.Controllers
         {
             _context = context;
         }
-
 
         // GET Envios/:id
         [HttpGet("{id}")]
@@ -69,10 +73,17 @@ namespace operadorLogisticoAPI.Controllers
             // Check that the record exists.
             var entity = await _context.Envio.FindAsync(envioId);
 
+            if (entity is null)
+            {
+                return NotFound($"Envio no encontrado para el id: {envioId}");
+            }
+
             entity.Estado = "Entregado";
             entity.FechaEntrega = DateTime.Now;
 
             var updatedEnvio = await this.Update(envioId, entity);
+
+
 
             return Ok(updatedEnvio);
         }
@@ -114,6 +125,24 @@ namespace operadorLogisticoAPI.Controllers
             }
 
             return entity;
+        }
+
+        private async Task notificarCambioEstado(int idEnvio)
+        {   
+            var token = new tokenResponse();
+
+            var client = new RestClient("https://dev-proc-envios.us.auth0.com/oauth/token");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("content-type", "application/json");
+            request.AddParameter("application/json", "{\"client_id\":\"dLj4RGx8oemIGcZX8jsyPqJbRHI0AReW\",\"client_secret\":\"zonDuV6RdCoF7pfg3KEiQoZ4ld9S6CKo6LChRvqzATpkiwGbiq-ot1j9eZlsD4pa\",\"audience\":\"https://www.api-procesador-envios.com/\",\"grant_type\":\"client_credentials\"}", ParameterType.RequestBody);
+            IRestResponse<tokenResponse> response = await client.ExecuteAsync<tokenResponse>(request);
+            
+            token = response.Data;
+
+            client = new RestClient($"https://xo2gv4p0wc.execute-api.us-east-1.amazonaws.com/Prod/api/envios/{idEnvio}/novedades/?novedades=Entregado");
+            request = new RestRequest(Method.POST);
+            request.AddHeader("authorization",$"{token.token_type} {token.access_token}");
+            IRestResponse res = await client.ExecuteAsync(request);
         }
 
     }
