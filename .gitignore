@@ -1,0 +1,22 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/.vs/operadorLogisticoAPI
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/cs
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/de
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/fr
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/ko
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/pt-BR
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/Properties
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/ru
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/runtimes
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/tr
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/zh-Hans
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/zh-Hant
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/pl
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/it
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/es
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1/ja
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/bin/Debug/netcoreapp3.1
+/Proyecto/operadorLogisticoAPI/src/operadorLogisticoAPI/obj

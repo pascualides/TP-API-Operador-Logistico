@@ -1,246 +1,240 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: ""
-  version: "1.0.0"
-  title: "Api Operador Logistico"
-  termsOfService: "http://swagger.io/terms/"
-  
-host: "apiOperador.swagger.io"
-basePath: "/v2"
+  description: ''
+  version: 1.0.0
+  title: Api Operador Logistico
+  termsOfService: http://swagger.io/terms/
+host: apiOperador.swagger.io
+basePath: /v2
 tags:
-
-- name: "ordenes_envio"
-  description: "Todo referido a las ordenes de envio"
-- name: "repartidores"
-  description: "Repartidores de la empresa dedicados a la entrega de paquetes"
-  
+  - name: ordenes_envio
+    description: Todo referido a las ordenes de envio
+  - name: repartidores
+    description: Repartidores de la empresa dedicados a la entrega de paquetes
 schemes:
-- "https"
-- "http"
+  - https
+  - http
 paths:
   /ordenes_envio:
     post:
       tags:
-      - "ordenes_envio"
-      summary: "Registo de una nueva orden de envio"
-      description: ""
-      operationId: "addOrdenEnvio"
+        - ordenes_envio
+      summary: Registo de una nueva orden de envio
+      description: ''
+      operationId: addOrdenEnvio
       consumes:
-      - "application/json"
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Objeto Envio que se necesita para el registro"
-        required: true
-        schema:
-          $ref: "#/definitions/Envio"
+        - in: body
+          name: body
+          description: Objeto Envio que se necesita para el registro
+          required: true
+          schema:
+            $ref: '#/definitions/Envio'
       responses:
-        "404":
-          description: "Resource not found"
-        "405":
-          description: "Validation exception"
-        "200":
-          description: "Succes"
+        '200':
+          description: Succes
+        '404':
+          description: Resource not found
+        '405':
+          description: Validation exception
   /ordenes_envio/{ordenID}:
     get:
       tags:
-      - "ordenes_envio"
-      summary: "Obtener una orden de envio segun su id"
-      operationId: "getOrdenEnvioById"
+        - ordenes_envio
+      summary: Obtener una orden de envio segun su id
+      operationId: getOrdenEnvioById
       produces:
-      - "application/xml"
-      - "application/json"
+        - application/xml
+        - application/json
       parameters:
-      - name: "ordenID"
-        in: "path"
-        description: "ID de la orden de envio a obtener"
-        required: true
-        type: "string"
+        - name: ordenID
+          in: path
+          description: ID de la orden de envio a obtener
+          required: true
+          type: string
       responses:
-        "200":
-          description: "successful operation"
+        '200':
+          description: successful operation
           schema:
-            $ref: "#/definitions/Envio"
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Envio not found"
+            $ref: '#/definitions/Envio'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Envio not found
   /ordenes_envio/{ordenID}/repartidor:
     post:
       tags:
-      - "ordenes_envio"
-      summary: "Actualizar un envio para asignar un repartidor"
-      operationId: "updateRepartidorEnvio"
+        - ordenes_envio
+      summary: Actualizar un envio para asignar un repartidor
+      operationId: updateRepartidorEnvio
       produces:
-      - "application/xml"
-      - "application/json"
+        - application/xml
+        - application/json
       parameters:
-      - name: "ordenID"
-        in: "path"
-        description: "ID de la orden de envio a la cual se le quiere asignar un repartidor"
-        required: true
-        type: "string"
+        - name: ordenID
+          in: path
+          description: ID de la orden de envio a la cual se le quiere asignar un repartidor
+          required: true
+          type: string
       responses:
-        "405":
-          description: "Invalid input"
-        "200":
-          description: "Asignacion correcta"
+        '200':
+          description: Asignacion correcta
+        '405':
+          description: Invalid input
   /ordenes_envio/{ordenID}/entrega:
     post:
       tags:
-      - "ordenes_envio"
-      summary: "Actualizar un envio para registrar la entrega"
-      operationId: "updateEntregaEnvio"
+        - ordenes_envio
+      summary: Actualizar un envio para registrar la entrega
+      operationId: updateEntregaEnvio
       produces:
-      - "application/xml"
-      - "application/json"
+        - application/xml
+        - application/json
       parameters:
-      - name: "ordenID"
-        in: "path"
-        description: "ID de la orden de envio a la cual se le quiere registrar la entrega"
-        required: true
-        type: "string"
+        - name: ordenID
+          in: path
+          description: ID de la orden de envio a la cual se le quiere registrar la entrega
+          required: true
+          type: string
       responses:
-        "405":
-          description: "Invalid input"
-        "200":
-          description: "Registro de entrega correcto"
+        '200':
+          description: Registro de entrega correcto
+        '405':
+          description: Invalid input
   /repartidores/{repartidorID}:
     delete:
       tags:
-      - "repartidores"
-      summary: "Eliminar un repartidor"
-      description: ""
-      operationId: "deletePet"
+        - repartidores
+      summary: Eliminar un repartidor
+      description: ''
+      operationId: deletePet
       produces:
-      - "application/xml"
-      - "application/json"
+        - application/xml
+        - application/json
       parameters:
-      - name: "repartidorID"
-        in: "path"
-        description: "id del repartidor a eliminar"
-        required: true
-        type: "integer"
-        format: "int64"
+        - name: repartidorID
+          in: path
+          description: id del repartidor a eliminar
+          required: true
+          type: integer
+          format: int64
       responses:
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Repartidor not found"
-        "200":
-          description: "Succes"
+        '200':
+          description: Succes
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Repartidor not found
   /repartidores:
     post:
       tags:
-      - "repartidores"
-      summary: "Crear un repartidor"
-      operationId: "crearRepartidor"
+        - repartidores
+      summary: Crear un repartidor
+      operationId: crearRepartidor
       produces:
-      - "application/xml"
-      - "application/json"
+        - application/xml
+        - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Created repartidor object"
-        required: true
-        schema:
-          $ref: "#/definitions/Persona"
+        - in: body
+          name: body
+          description: Created repartidor object
+          required: true
+          schema:
+            $ref: '#/definitions/Persona'
       responses:
-        "400":
-          description: "Error, Invalid data"
-        "404":
-          description: "Not found"
-        "200":
-          description: "Succes"
+        '200':
+          description: Succes
+        '400':
+          description: Error, Invalid data
+        '404':
+          description: Not found
     get:
       tags:
-      - "repartidores"
-      summary: "Obtener todos los repartidores"
-      operationId: "getRepartidores"
+        - repartidores
+      summary: Obtener todos los repartidores
+      operationId: getRepartidores
       produces:
-      - "application/xml"
-      - "application/json"
+        - application/xml
+        - application/json
       responses:
-        "200":
-          description: "successful operation"
+        '200':
+          description: successful operation
           schema:
-            type: "array"
+            type: array
             items:
-              $ref: "#/definitions/Persona"
-        "400":
-          description: "Invalid tag value"
+              $ref: '#/definitions/Persona'
+        '400':
+          description: Invalid tag value
 definitions:
-  Direccion:
-    type: "object"
-    properties:
-      calle:
-        type: "string"
-      localidad:
-        type: "string"
-      provincia:
-        type: "string"
-      nro:
-        type: "string"
-      codPostal:
-        type: "string"
-    xml:
-      name: "Direccion"
   Persona:
-    type: "object"
+    type: object
     properties:
       nombre:
-        type: "string"
+        type: string
       apellido:
-        type: "string"
+        type: string
       documento:
-        type: "integer"
+        type: integer
       email:
-        type: "string"
+        type: string
     xml:
-      name: "Persona"
-  Producto:
-    type: "object"
-    properties:
-      peso:
-        type: "integer"
-      tamaño:
-        type: "string"
-      delicado:
-        type: "boolean"
-    xml:
-      name: "Producto"
+      name: Persona
   Envio:
-    type: "object"
+    type: object
     required:
-    - "origen"
-    - "destino"
-    - "comprador"
-    - "detalle"
+      - comprador
+      - detalle
     properties:
       id:
-        type: "string"
-      origen:
-        $ref: "#/definitions/Direccion"
-      destino:
-        $ref: "#/definitions/Direccion"
+        type: string
+      provinciaDestino:
+        type: string
+      localidadDestino:
+        type: string
+      codPostalDestino:
+        type: integer
+      calleDestino:
+        type: string
+      nroDestino:
+        type: string
+      provinciaOrigen:
+        type: string
+      localidadOrigen:
+        type: string
+      codPostalOrigen:
+        type: integer
+      calleOrigen:
+        type: string
+      nroOrigen:
+        type: string
       contacto:
-        $ref: "#/definitions/Persona"
-      producto:
-        $ref: "#/definitions/Producto"
-      estado:
-        type: "string"
-        description: "Estado del envio"
+        $ref: '#/definitions/Persona'
+      pesoProd:
+        type: integer
+        description: peso del paquete en gramos
+      tamañoProd:
+        type: string
         enum:
-        - "Creado"
-        - "En Transito"
-        - "Entregado"
+          - Pequeño
+          - Mediano
+          - Grande
+      delicado:
+        type: string
+      estado:
+        type: string
+        description: Estado del envio
+        enum:
+          - Creado
+          - En Transito
+          - Entregado
       fecha_recepcion:
-        type: "string"
-        format: "date-time"
+        type: string
+        format: date-time
       fecha_entrega:
-        type: "string"
-        format: "date-time"
+        type: string
+        format: date-time
     xml:
-      name: "Envio"
+      name: Envio

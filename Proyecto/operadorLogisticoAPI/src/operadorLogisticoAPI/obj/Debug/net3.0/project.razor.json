@@ -1,0 +1,19 @@
+{
+  "FilePath": "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\src\\operadorLogisticoAPI\\operadorLogisticoAPI.csproj",
+  "Configuration": {
+    "ConfigurationName": "MVC-3.0",
+    "LanguageVersion": "5.0",
+    "Extensions": [
+      {
+        "ExtensionName": "MVC-3.0"
+      }
+    ]
+  },
+  "ProjectWorkspaceState": {
+    "TagHelpers": [],
+    "CSharpLanguageVersion": 703
+  },
+  "RootNamespace": "operadorLogisticoAPI",
+  "Documents": [],
+  "SerializationFormat": "0.2"
+}

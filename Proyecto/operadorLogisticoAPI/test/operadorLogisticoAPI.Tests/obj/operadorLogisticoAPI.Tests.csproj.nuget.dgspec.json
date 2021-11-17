@@ -1,0 +1,164 @@
+{
+  "format": 1,
+  "restore": {
+    "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\test\\operadorLogisticoAPI.Tests\\operadorLogisticoAPI.Tests.csproj": {}
+  },
+  "projects": {
+    "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\src\\operadorLogisticoAPI\\operadorLogisticoAPI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\src\\operadorLogisticoAPI\\operadorLogisticoAPI.csproj",
+        "projectName": "operadorLogisticoAPI",
+        "projectPath": "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\src\\operadorLogisticoAPI\\operadorLogisticoAPI.csproj",
+        "packagesPath": "C:\\Users\\Rodrigo\\.nuget\\packages\\",
+        "outputPath": "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\src\\operadorLogisticoAPI\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Rodrigo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Amazon.Lambda.AspNetCoreServer": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\test\\operadorLogisticoAPI.Tests\\operadorLogisticoAPI.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\test\\operadorLogisticoAPI.Tests\\operadorLogisticoAPI.Tests.csproj",
+        "projectName": "operadorLogisticoAPI.Tests",
+        "projectPath": "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\test\\operadorLogisticoAPI.Tests\\operadorLogisticoAPI.Tests.csproj",
+        "packagesPath": "C:\\Users\\Rodrigo\\.nuget\\packages\\",
+        "outputPath": "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\test\\operadorLogisticoAPI.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Rodrigo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\src\\operadorLogisticoAPI\\operadorLogisticoAPI.csproj": {
+                "projectPath": "d:\\Rodrigo\\Downloads\\IAEW\\Repositorio\\TP_api_operador_logistico\\TP-API-Operador-Logistico\\Proyecto\\operadorLogisticoAPI\\src\\operadorLogisticoAPI\\operadorLogisticoAPI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "AWSSDK.Extensions.NETCore.Setup": {
+              "target": "Package",
+              "version": "[3.7.0.1, )"
+            },
+            "Amazon.Lambda.APIGatewayEvents": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "Amazon.Lambda.Core": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Amazon.Lambda.TestUtilities": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[15.5.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
