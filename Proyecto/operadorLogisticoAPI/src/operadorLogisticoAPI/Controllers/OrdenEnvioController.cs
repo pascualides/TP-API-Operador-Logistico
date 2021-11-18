@@ -46,7 +46,7 @@ namespace operadorLogisticoAPI.Controllers
         public async Task<IActionResult> CreateAsync([FromBody]Envio envio)
         {
 
-            var result = await _context.Repartidores.FindAsync(envio.contacto.Documento);
+            var result = await _context.Contacto.FindAsync(envio.contacto.Documento);
 
             if (result is null)
             {
@@ -61,7 +61,7 @@ namespace operadorLogisticoAPI.Controllers
             await _context.Envio.AddAsync(envio);
             await _context.SaveChangesAsync();
 
-            return Ok(envio);
+            return Ok(result);
         }
 
         // POST Envios/5/entrega
@@ -75,6 +75,7 @@ namespace operadorLogisticoAPI.Controllers
 
             if (entity is null)
             {
+                await notificarCambioEstado(envioId);
                 return NotFound($"Envio no encontrado para el id: {envioId}");
             }
 
@@ -83,9 +84,10 @@ namespace operadorLogisticoAPI.Controllers
 
             var updatedEnvio = await this.Update(envioId, entity);
 
-
+            var res = await notificarCambioEstado(envioId);
 
             return Ok(updatedEnvio);
+
         }
 
         // Put Envios/5/repartidor
@@ -94,15 +96,38 @@ namespace operadorLogisticoAPI.Controllers
         [Authorize(Policy = "write:estados_envios")]
         public async Task<IActionResult> UpdateToEnTransito(int envioId, [FromBody] Repartidores repartidor)
         {
+
+            var rep = await _context.Repartidores.FindAsync(repartidor.Documento);
+
+
+            if (rep is null)
+            {
+                return NotFound("No se encontró el repartidor en la base de datos");
+            }
+
+            if (rep.IsDeleted)
+            {
+                return NotFound($"El repartidor {rep.Apellido}, {rep.Nombre} se encuentra dado de baja");
+            }
+
+            
+
             // Check that the record exists.
             var entity = await _context.Envio.FindAsync(envioId);
+
+            if (entity is null)
+            {
+                return NotFound($"Envio no encontrado para el id: {envioId}");
+            }
 
             entity.Estado = "En Transito";
             entity.DniRepartidor = repartidor.Documento;
 
             var updatedEnvio = await this.Update(envioId, entity);
 
+            
             return Ok(updatedEnvio);
+            
         }
 
         private async Task<Envio> Update(int envioId, Envio updateEnvio)
@@ -124,10 +149,12 @@ namespace operadorLogisticoAPI.Controllers
                 await _context.SaveChangesAsync();
             }
 
+            
+
             return entity;
         }
 
-        private async Task notificarCambioEstado(int idEnvio)
+        private async Task<string> notificarCambioEstado(int idEnvio)
         {   
             var token = new tokenResponse();
 
@@ -143,6 +170,8 @@ namespace operadorLogisticoAPI.Controllers
             request = new RestRequest(Method.POST);
             request.AddHeader("authorization",$"{token.token_type} {token.access_token}");
             IRestResponse res = await client.ExecuteAsync(request);
+
+            return res.Content.ToString();
         }
 
     }

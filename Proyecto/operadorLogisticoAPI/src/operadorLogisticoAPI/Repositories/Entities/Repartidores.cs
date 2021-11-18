@@ -5,10 +5,10 @@ namespace operadorLogisticoAPI.Repositories.Entities
 {
     public partial class Repartidores
     {
-        public Repartidores()
-        {
-            Envio = new HashSet<Envio>();
-        }
+        // public Repartidores()
+        // {
+        //     Envio = new HashSet<Envio>();
+        // }
 
         public int Documento { get; set; }
         public string Nombre { get; set; }
@@ -16,6 +16,6 @@ namespace operadorLogisticoAPI.Repositories.Entities
         public string Email { get; set; }
         public Boolean IsDeleted { get; set; }
 
-        public virtual ICollection<Envio> Envio { get; set; }
+        //public virtual ICollection<Envio> Envio { get; set; }
     }
 }

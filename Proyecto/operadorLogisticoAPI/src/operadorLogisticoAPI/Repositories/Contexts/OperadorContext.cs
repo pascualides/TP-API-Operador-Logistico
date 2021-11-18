@@ -138,15 +138,15 @@ namespace operadorLogisticoAPI.Repositories.Contexts
                 //     .HasForeignKey(d => d.DniContacto)
                 //     .HasConstraintName("FK__envio__dniContac__5CD6CB2B");
 
-                entity.HasOne(d => d.DniRepartidorNavigation)
-                    .WithMany(p => p.Envio)
-                    .HasForeignKey(d => d.DniRepartidor)
-                    .HasConstraintName("FK__envio__dniRepart__5EBF139D");
+                // entity.HasOne(d => d.DniRepartidorNavigation)
+                //     .WithMany(p => p.Envio)
+                //     .HasForeignKey(d => d.DniRepartidor)
+                //     .HasConstraintName("FK__envio__dniRepart__5EBF139D");
 
-                entity.HasOne(d => d.NroProductoNavigation)
-                    .WithMany(p => p.Envio)
-                    .HasForeignKey(d => d.NroProducto)
-                    .HasConstraintName("FK__envio__nroProduc__5FB337D6");
+                // entity.HasOne(d => d.NroProductoNavigation)
+                //     .WithMany(p => p.Envio)
+                //     .HasForeignKey(d => d.NroProducto)
+                //     .HasConstraintName("FK__envio__nroProduc__5FB337D6");
             });
 
             modelBuilder.Entity<Producto>(entity =>
