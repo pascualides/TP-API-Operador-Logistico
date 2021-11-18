@@ -32,7 +32,7 @@ namespace operadorLogisticoAPI.Repositories.Entities
         public Contacto contacto { get; set; }
 
         // public virtual Contacto DniContactoNavigation { get; set; }
-        public virtual Repartidores DniRepartidorNavigation { get; set; }
-        public virtual Producto NroProductoNavigation { get; set; }
+        //public virtual Repartidores DniRepartidorNavigation { get; set; }
+        //public virtual Producto NroProductoNavigation { get; set; }
     }
 }

@@ -8,9 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 
 using RestSharp;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 
 namespace operadorLogisticoAPI.Controllers
 {
@@ -26,8 +23,9 @@ namespace operadorLogisticoAPI.Controllers
             _context = context;
         }
 
-        // GET Envios/:id
+        // GET ordenes_envio/:id
         [HttpGet("{id}")]
+        [Authorize(Policy = "read:envios")]
         public async Task<ActionResult<Envio>> GetById(int id)
         {
             var result =await _context.Envio.FindAsync(id);
@@ -40,13 +38,13 @@ namespace operadorLogisticoAPI.Controllers
             return Ok(result);
         }
 
-        // POST Envios/
+        // POST ordenes_envio/
         [HttpPost]
         [Authorize(Policy = "write:envios")]
         public async Task<IActionResult> CreateAsync([FromBody]Envio envio)
         {
 
-            var result = await _context.Repartidores.FindAsync(envio.contacto.Documento);
+            var result = await _context.Contacto.FindAsync(envio.contacto.Documento);
 
             if (result is null)
             {
@@ -64,7 +62,7 @@ namespace operadorLogisticoAPI.Controllers
             return Ok(envio);
         }
 
-        // POST Envios/5/entrega
+        // POST ordenes_envio/5/entrega
         [Route("{envioId}/entrega")]
         [HttpPost]
         [Authorize(Policy = "write:estados_envios")]
@@ -75,6 +73,7 @@ namespace operadorLogisticoAPI.Controllers
 
             if (entity is null)
             {
+                await notificarCambioEstado(envioId);
                 return NotFound($"Envio no encontrado para el id: {envioId}");
             }
 
@@ -83,26 +82,50 @@ namespace operadorLogisticoAPI.Controllers
 
             var updatedEnvio = await this.Update(envioId, entity);
 
-
+            var res = await notificarCambioEstado(envioId);
 
             return Ok(updatedEnvio);
+
         }
 
-        // Put Envios/5/repartidor
+        // Put ordenes_envio/5/repartidor
         [Route("{envioId}/repartidor")]
         [HttpPost]
         [Authorize(Policy = "write:estados_envios")]
         public async Task<IActionResult> UpdateToEnTransito(int envioId, [FromBody] Repartidores repartidor)
         {
+
+            var rep = await _context.Repartidores.FindAsync(repartidor.Documento);
+
+
+            if (rep is null)
+            {
+                return NotFound("No se encontró el repartidor en la base de datos");
+            }
+
+            if (rep.IsDeleted)
+            {
+                return NotFound($"El repartidor {rep.Apellido}, {rep.Nombre} se encuentra dado de baja");
+            }
+
+            
+
             // Check that the record exists.
             var entity = await _context.Envio.FindAsync(envioId);
+
+            if (entity is null)
+            {
+                return NotFound($"Envio no encontrado para el id: {envioId}");
+            }
 
             entity.Estado = "En Transito";
             entity.DniRepartidor = repartidor.Documento;
 
             var updatedEnvio = await this.Update(envioId, entity);
 
+            
             return Ok(updatedEnvio);
+            
         }
 
         private async Task<Envio> Update(int envioId, Envio updateEnvio)
@@ -127,7 +150,7 @@ namespace operadorLogisticoAPI.Controllers
             return entity;
         }
 
-        private async Task notificarCambioEstado(int idEnvio)
+        private async Task<string> notificarCambioEstado(int idEnvio)
         {   
             var token = new tokenResponse();
 
@@ -138,11 +161,18 @@ namespace operadorLogisticoAPI.Controllers
             IRestResponse<tokenResponse> response = await client.ExecuteAsync<tokenResponse>(request);
             
             token = response.Data;
+            var tokenType = token.token_type;
+            var access = token.access_token;
 
             client = new RestClient($"https://xo2gv4p0wc.execute-api.us-east-1.amazonaws.com/Prod/api/envios/{idEnvio}/novedades/?novedades=Entregado");
             request = new RestRequest(Method.POST);
-            request.AddHeader("authorization",$"{token.token_type} {token.access_token}");
+            request.AddHeader("authorization",$"{tokenType} {access}");
+            request.RequestFormat = DataFormat.Json;
+            request.AddJsonBody(new { id = idEnvio, idEnvio = idEnvio, nuevoEstado = "Entregado" });
+
             IRestResponse res = await client.ExecuteAsync(request);
+
+            return res.Content.ToString();
         }
 
     }
