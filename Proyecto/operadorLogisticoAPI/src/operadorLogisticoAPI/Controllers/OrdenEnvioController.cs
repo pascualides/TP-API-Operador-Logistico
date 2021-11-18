@@ -164,7 +164,7 @@ namespace operadorLogisticoAPI.Controllers
             var tokenType = token.token_type;
             var access = token.access_token;
 
-            client = new RestClient($"https://xo2gv4p0wc.execute-api.us-east-1.amazonaws.com/Prod/api/envios/{idEnvio}/novedades/?novedades=Entregado");
+            client = new RestClient($"https://xo2gv4p0wc.execute-api.us-east-1.amazonaws.com/Prod/api/envios/{idEnvio}/novedades");
             request = new RestRequest(Method.POST);
             request.AddHeader("authorization",$"{tokenType} {access}");
             request.RequestFormat = DataFormat.Json;
