@@ -59,7 +59,7 @@ namespace operadorLogisticoAPI.Controllers
             await _context.Envio.AddAsync(envio);
             await _context.SaveChangesAsync();
 
-            return Ok(result);
+            return Ok(envio);
         }
 
         // POST ordenes_envio/5/entrega
